@@ -3,32 +3,23 @@ let currentHour = 14;
 let currentMinute = 0;
 
 function updateTimeDisplay() {
-    document.getElementById('hourDisplay').textContent = currentHour.toString().padStart(2, '0');
-    document.getElementById('minDisplay').textContent = currentMinute.toString().padStart(2, '0');
-    // Формируем строку времени для калькулятора
+    const hourElem = document.getElementById('hourDisplay');
+    const minElem = document.getElementById('minDisplay');
+    if (hourElem) hourElem.textContent = currentHour.toString().padStart(2, '0');
+    if (minElem) minElem.textContent = currentMinute.toString().padStart(2, '0');
     const timeString = `${currentHour.toString().padStart(2, '0')}:${currentMinute.toString().padStart(2, '0')}`;
-    // Вызываем пересчёт цены, передавая новое время
     updateTotalWithTime(timeString);
 }
 
-// Управление часами
-document.getElementById('hourUp').addEventListener('click', () => {
-    currentHour = (currentHour + 1) % 24;
-    updateTimeDisplay();
-});
-document.getElementById('hourDown').addEventListener('click', () => {
-    currentHour = (currentHour - 1 + 24) % 24;
-    updateTimeDisplay();
-});
-// Управление минутами (шаг 15 минут для удобства)
-document.getElementById('minUp').addEventListener('click', () => {
-    currentMinute = (currentMinute + 15) % 60;
-    updateTimeDisplay();
-});
-document.getElementById('minDown').addEventListener('click', () => {
-    currentMinute = (currentMinute - 15 + 60) % 60;
-    updateTimeDisplay();
-});
+const hourUp = document.getElementById('hourUp');
+const hourDown = document.getElementById('hourDown');
+const minUp = document.getElementById('minUp');
+const minDown = document.getElementById('minDown');
+
+if (hourUp) hourUp.addEventListener('click', () => { currentHour = (currentHour + 1) % 24; updateTimeDisplay(); });
+if (hourDown) hourDown.addEventListener('click', () => { currentHour = (currentHour - 1 + 24) % 24; updateTimeDisplay(); });
+if (minUp) minUp.addEventListener('click', () => { currentMinute = (currentMinute + 15) % 60; updateTimeDisplay(); });
+if (minDown) minDown.addEventListener('click', () => { currentMinute = (currentMinute - 15 + 60) % 60; updateTimeDisplay(); });
 
 // === КАЛЬКУЛЯТОР ===
 function getDiscountPercent(timeString) {
@@ -53,13 +44,14 @@ const totalSpan = document.getElementById('totalPrice');
 const discountMsg = document.getElementById('discountMessage');
 
 function updateTotalWithTime(timeString) {
+    if (!tariffSelect || !hoursCalc || !totalSpan) return;
     let price = parseFloat(tariffSelect.value);
     let hours = parseFloat(hoursCalc.value);
     if (isNaN(hours) || hours <= 0) hours = 1;
     let discount = getDiscountPercent(timeString) / 100;
     let total = price * hours * (1 - discount);
     totalSpan.innerText = Math.round(total) + ' ₽';
-    discountMsg.innerHTML = getDiscountMessage(getDiscountPercent(timeString));
+    if (discountMsg) discountMsg.innerHTML = getDiscountMessage(getDiscountPercent(timeString));
 }
 
 function updateTotal() {
@@ -67,46 +59,62 @@ function updateTotal() {
     updateTotalWithTime(timeString);
 }
 
-tariffSelect.addEventListener('change', updateTotal);
-hoursCalc.addEventListener('input', updateTotal);
+if (tariffSelect) tariffSelect.addEventListener('change', updateTotal);
+if (hoursCalc) hoursCalc.addEventListener('input', updateTotal);
 updateTotal();
 
 // === ФОРМА ЗАПИСИ ===
 const submitBtn = document.getElementById('submitBookingBtn');
 const statusDiv = document.getElementById('bookingStatus');
 
-submitBtn.addEventListener('click', () => {
-    const name = document.getElementById('bookingName').value.trim();
-    const phone = document.getElementById('bookingPhone').value.trim();
-    const tariff = document.getElementById('bookingTariff').value;
-    const date = document.getElementById('bookingDate').value;
-    const time = document.getElementById('bookingTime').value;
-    let hours = parseFloat(document.getElementById('bookingHours').value);
+if (submitBtn) {
+    submitBtn.addEventListener('click', () => {
+        const name = document.getElementById('bookingName')?.value.trim() || '';
+        const phone = document.getElementById('bookingPhone')?.value.trim() || '';
+        const tariff = document.getElementById('bookingTariff')?.value || '';
+        const date = document.getElementById('bookingDate')?.value || '';
+        const time = document.getElementById('bookingTime')?.value || '';
+        let hours = parseFloat(document.getElementById('bookingHours')?.value || 0);
 
-    if (!name || !phone || !date || !time || isNaN(hours)) {
-        statusDiv.textContent = '❌ Заполните все поля: Имя, Телефон, Дата, Время, Часы';
-        statusDiv.className = 'booking-status error';
-        setTimeout(() => statusDiv.style.display = 'none', 3000);
-        return;
-    }
-    if (hours < 2) {
-        statusDiv.textContent = '❌ Ошибка: онлайн-запись от 2 часов и более! Вы выбрали ' + hours + ' ч.';
-        statusDiv.className = 'booking-status error';
-        setTimeout(() => statusDiv.style.display = 'none', 4000);
-        return;
-    }
+        if (!name || !phone || !date || !time || isNaN(hours)) {
+            if (statusDiv) {
+                statusDiv.textContent = '❌ Заполните все поля: Имя, Телефон, Дата, Время, Часы';
+                statusDiv.className = 'booking-status error';
+                setTimeout(() => { if (statusDiv) statusDiv.style.display = 'none'; }, 3000);
+            }
+            return;
+        }
+        if (hours < 2) {
+            if (statusDiv) {
+                statusDiv.textContent = '❌ Ошибка: онлайн-запись от 2 часов и более! Вы выбрали ' + hours + ' ч.';
+                statusDiv.className = 'booking-status error';
+                setTimeout(() => { if (statusDiv) statusDiv.style.display = 'none'; }, 4000);
+            }
+            return;
+        }
 
-    statusDiv.textContent = `✅ ${name}, заявка принята! Тариф: ${tariff} | ${date} в ${time} на ${hours} ч. Скоро свяжемся с вами.`;
-    statusDiv.className = 'booking-status success';
-    setTimeout(() => statusDiv.style.display = 'none', 5000);
-});
+        if (statusDiv) {
+            statusDiv.textContent = `✅ ${name}, заявка принята! Тариф: ${tariff} | ${date} в ${time} на ${hours} ч. Скоро свяжемся с вами.`;
+            statusDiv.className = 'booking-status success';
+            setTimeout(() => { if (statusDiv) statusDiv.style.display = 'none'; }, 5000);
+        }
+    });
+}
 
 // Подстановка дат
-const today = new Date().toISOString().split('T')[0];
-document.getElementById('bookingDate').min = today;
-let tomorrow = new Date();
-tomorrow.setDate(tomorrow.getDate() + 1);
-document.getElementById('bookingDate').value = tomorrow.toISOString().split('T')[0];
-document.getElementById('bookingTime').value = '18:00';
-document.getElementById('bookingHours').min = 2;
-document.getElementById('bookingHours').value = 2;
+const bookingDate = document.getElementById('bookingDate');
+const bookingTime = document.getElementById('bookingTime');
+const bookingHours = document.getElementById('bookingHours');
+
+if (bookingDate) {
+    const today = new Date().toISOString().split('T')[0];
+    bookingDate.min = today;
+    let tomorrow = new Date();
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    bookingDate.value = tomorrow.toISOString().split('T')[0];
+}
+if (bookingTime) bookingTime.value = '18:00';
+if (bookingHours) {
+    bookingHours.min = 2;
+    bookingHours.value = 2;
+}

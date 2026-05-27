@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>Overclock — Компьютерный клуб | Калькулятор с циферблатом</title>
+    <title>Overclock — Компьютерный клуб</title>
     <!-- Подключение внешних ресурсов -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700;14..32,800;14..32,900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
@@ -20,7 +20,7 @@
         <div class="nav-links">
             <a href="#tariffs"><i class="fas fa-dice-d6"></i> Тарифы</a>
             <a href="#calculator"><i class="fas fa-charging-station"></i> Калькулятор</a>
-            <a href="#booking"><i class="fas fa-calendar-check"></i> Онлайн-запись</a>
+            <a href="#booking"><i class="fas fa-calendar-check"></i> Запись</a>
             <a href="#contacts"><i class="fas fa-map-pin"></i> Контакты</a>
         </div>
     </div>
@@ -46,7 +46,7 @@
         <div class="section-sub">Выбери свой уровень заряда</div>
         <div class="cards-grid">
             <div class="tariff-card">
-                <i class="fas fa-microchip" style="font-size: 44px; color: #9bffab;"></i>
+                <i class="fas fa-microchip" style="font-size: 36px; color: #9bffab;"></i>
                 <div class="tariff-name">Standart</div>
                 <div class="price">200 ₽<small>/час</small></div>
                 <ul class="features-list">
@@ -56,7 +56,7 @@
                 </ul>
             </div>
             <div class="tariff-card">
-                <i class="fas fa-tachometer-alt" style="font-size: 44px; color: #b0ffb0;"></i>
+                <i class="fas fa-tachometer-alt" style="font-size: 36px; color: #b0ffb0;"></i>
                 <div class="tariff-name">PRO</div>
                 <div class="price">300 ₽<small>/час</small></div>
                 <ul class="features-list">
@@ -66,22 +66,21 @@
                 </ul>
             </div>
             <div class="tariff-card">
-                <i class="fas fa-gem" style="font-size: 44px; color: #b3ffb3;"></i>
+                <i class="fas fa-gem" style="font-size: 36px; color: #b3ffb3;"></i>
                 <div class="tariff-name">Premium</div>
                 <div class="price">500 ₽<small>/час</small></div>
                 <ul class="features-list">
                     <li><i class="fas fa-check-circle"></i> RTX 4080 / i9</li>
                     <li><i class="fas fa-check-circle"></i> 240Hz + G-Sync</li>
                     <li><i class="fas fa-check-circle"></i> Logitech периферия</li>
-                    <li><i class="fas fa-check-circle"></i> Энергетик + шоколадный батончик в подарок</li>
+                    <li><i class="fas fa-check-circle"></i> Энергетик + батончик</li>
                 </ul>
             </div>
         </div>
     </div>
 
-    <!-- КАЛЬКУЛЯТОР С НАСТОЯЩИМ ЦИФЕРБЛАТОМ -->
     <div id="calculator" class="calculator-block">
-        <h3 style="font-size: 30px; margin-bottom: 20px; color:#bef5be;"><i class="fas fa-calculator"></i> Калькулятор сеанса</h3>
+        <h3 style="font-size: 24px; margin-bottom: 16px; color:#bef5be;"><i class="fas fa-calculator"></i> Калькулятор сеанса</h3>
         <div class="calc-row">
             <div class="calc-item">
                 <label>Тарифная зона</label>
@@ -94,13 +93,13 @@
             <div class="calc-item">
                 <label>Время начала (циферблат)</label>
                 <div class="time-picker">
-                    <button id="hourDown" class="time-btn">-</button>
+                    <button id="hourDown">−</button>
                     <span id="hourDisplay" class="time-display">14</span>
-                    <button id="hourUp" class="time-btn">+</button>
-                    <span style="font-size: 1.5rem; font-weight: bold;">:</span>
-                    <button id="minDown" class="time-btn">-</button>
+                    <button id="hourUp">+</button>
+                    <span style="font-size: 1.2rem;">:</span>
+                    <button id="minDown">−</button>
                     <span id="minDisplay" class="time-display">00</span>
-                    <button id="minUp" class="time-btn">+</button>
+                    <button id="minUp">+</button>
                 </div>
             </div>
             <div class="calc-item">
@@ -118,8 +117,8 @@
     </div>
 
     <div id="booking" class="booking-block">
-        <h3 style="font-size: 30px; margin-bottom: 20px; color:#bef5be;"><i class="fas fa-calendar-check"></i> Онлайн-запись</h3>
-        <div style="background: #1f9a3e20; border: 1px solid #5eff8e; border-radius: 40px; padding: 12px 20px; margin-bottom: 25px; text-align: center;">
+        <h3 style="font-size: 24px; margin-bottom: 16px; color:#bef5be;"><i class="fas fa-calendar-check"></i> Онлайн-запись</h3>
+        <div class="min-booking-notice">
             <i class="fas fa-info-circle"></i> Минимальное время бронирования — <strong>2 часа</strong>
         </div>
         <div class="form-row">
@@ -156,13 +155,13 @@
         </div>
         <div class="form-row">
             <div class="form-group">
-                <label><i class="fas fa-comment"></i> Комментарий (опционально)</label>
+                <label><i class="fas fa-comment"></i> Комментарий</label>
                 <input type="text" id="bookingComment" placeholder="Пожелания по месту">
             </div>
         </div>
         <button class="btn-primary" id="submitBookingBtn"><i class="fas fa-check-circle"></i> Забронировать</button>
         <div id="bookingStatus" class="booking-status"></div>
-        <div style="margin-top: 20px; font-size: 13px;"><i class="fas fa-info-circle"></i> После бронирования с вами свяжется администратор</div>
+        <div class="info-note"><i class="fas fa-info-circle"></i> После бронирования с вами свяжется администратор</div>
     </div>
 
     <div id="contacts" class="section">
@@ -207,7 +206,7 @@
                     <a href="#" class="social-btn"><i class="fab fa-vk"></i> VK</a>
                     <a href="#" class="social-btn"><i class="fab fa-telegram"></i> Telegram</a>
                 </div>
-                <div class="work-hours" style="margin-top: 20px;">
+                <div class="booking-steps">
                     <h4><i class="fas fa-headset"></i> Как забронировать?</h4>
                     <div class="location-detail">
                         <i class="fas fa-calendar-check"></i>
@@ -220,7 +219,7 @@
 
     <footer>
         <p>© OVERCLOCK | Чебоксары, пр-т Мира 82А | 8-937-394-72-24</p>
-        <p style="margin-top: 8px;"><i class="fas fa-tree"></i> Overclock — разгон без компромиссов</p>
+        <p style="margin-top: 6px;"><i class="fas fa-tree"></i> Overclock — разгон без компромиссов</p>
     </footer>
 </div>
 
